@@ -5,8 +5,8 @@
 // Signals that a function cannot be accesed before decrypting the .xpayload section
 #define POLYV_ENCRYPTED
 
-#define POLYV_HIDDEN_SECTION_BEG int payload_beg() { return 0xDEADBEEF; }
-#define POLYV_HIDDEN_SECTION_END int payload_end() { return 0xDEADBEEF; }
+#define POLYV_HIDDEN_SECTION_BEG int payload_beg() { return 0xDEAD; }
+#define POLYV_HIDDEN_SECTION_END int payload_end() { return 0xBEEF; }
 
 #define POLYV_HIDDEN_SECTION(hidden_code)       \
 namespace polyv::hidden                         \
