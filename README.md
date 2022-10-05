@@ -1,6 +1,21 @@
-# Polyv - A polymorph malware
+# Polyv - Polymorphic Malware Framework
 
-This project aims to create a simple polymorph malware that encrypts his code while inactive and decrypts it during runtime.
+This project aims to create a simple polymorph malware framework that enable the used to create encrypted payloads.
+
+## Usage - Header only library
+
+To use the library just import the polyv.hpp header and generate the implementation.
+
+```c++
+#define POLYV_IMPLEMENTATION
+#include <polyv.hpp>
+```
+
+To enable the encryption system you must enable the *POLYV_USE_ENCRYPTION* compiler directive before importing the library header and use the provided linker script (encrypted.ld). A simple cmake template is available in the example folder.
+
+```c++
+#define POLYV_USE_ENCRYPTION
+```
 
 ## Components
 
