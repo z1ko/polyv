@@ -62,7 +62,7 @@ struct elf64
 /// Contains all functions used to decrypt the encrypted section
 namespace polyv::loader {
     
-/// Apply symmetric xor with the provided key and the .encrypt section
+/// Apply symmetric xor with the provided key on the .encrypt section
 void sxor(keybyte* key, size_t key_size);
 
 /// RAII class implementing a scoped decryption/encryption
