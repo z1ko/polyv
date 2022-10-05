@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 project(polyv)
 
-add_subdirectory(lib)
 add_subdirectory(client2)
 
 #add_subdirectory(client)

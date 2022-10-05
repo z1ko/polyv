@@ -5,6 +5,10 @@
         "*.tcc": "cpp",
         "fstream": "cpp",
         "ostream": "cpp",
-        "shared_mutex": "cpp"
-    }
+        "shared_mutex": "cpp",
+        "array": "cpp",
+        "string": "cpp",
+        "string_view": "cpp"
+    },
+    "cmake.sourceDirectory": "${workspaceFolder}/."
 }
