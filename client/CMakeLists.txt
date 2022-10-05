@@ -5,7 +5,6 @@ add_library(polyv_lib
     src/payload.cpp 
     src/crypt.hpp 
     src/crypt.cpp
-    src/platform/linux.cpp
 )
 
 target_compile_options(polyv_lib PUBLIC "-fPIC")

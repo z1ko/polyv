@@ -10,7 +10,7 @@ polyv::crypt::key global_key = {
 };
 */
 
-polyv::crypt::key global_key = { 0xDE, 0xAD, 0xBE, 0xEF };
+//polyv::crypt::key global_key = { 0xDE, 0xAD, 0xBE, 0xEF };
 
 int main(int argc, char* argv[]) {
     int result = -1;
