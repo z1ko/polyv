@@ -3,13 +3,27 @@
 #define POLYV_IMPLEMENTATION
 #include <polyv.h>
 
-#include <time.h> // time()
+#include <dirent.h>
 
 /// Main entry point of the malware 
 int POLYV_ENCRYPTED payload(int argc, char* argv[]) {
     printf("Hello, Hidden!\n");
 
-    
+    DIR *dir;
+    if (!(dir = opendir(".")))
+        return -1;
+
+    char path[1024];
+    struct dirent* entry;
+
+    printf("Directories:\n");
+    while((entry = readdir(dir)) != NULL) {
+        if (entry->d_type == DT_DIR)
+            if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
+                continue;
+        
+        printf("  %s\n", entry->d_name);
+    }
 
     return 0;
 }
@@ -33,6 +47,7 @@ int main(int argc, char* argv[]) {
     }
 
     // This should crash
-    payload(argc, argv);
+    //payload(argc, argv);
+    
     return 0;
 }
