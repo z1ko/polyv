@@ -1,14 +1,19 @@
+add_executable(polyv_client src/main.cpp)
 
-
-add_library(polyv_lib
-    src/payload.hpp 
-    src/payload.cpp 
-    src/crypt.hpp 
-    src/crypt.cpp
+target_include_directories(polyv_client
+    PUBLIC ${CMAKE_SOURCE_DIR}
 )
 
-target_compile_options(polyv_lib PUBLIC "-fPIC")
-target_include_directories(polyv_lib PUBLIC src)
+# Uses custom loader script 
+target_link_options(polyv_client
+    PUBLIC -T${CMAKE_SOURCE_DIR}/encrypted.ld
+)
 
-add_executable(polyv_client src/main.cpp)
-target_link_libraries(polyv_client PUBLIC polyv_lib)
+target_compile_options(polyv_client
+    PUBLIC -std=c++17
+)
+
+# Client should use encryption
+#target_compile_definitions(polyv_client 
+#    PUBLIC POLYV_USE_ENCRYPTION
+#)

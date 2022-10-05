@@ -1,3 +1,8 @@
 
 add_executable(polyv_ignite src/main.cpp)
-target_link_libraries(polyv_ignite PUBLIC polyv_lib)
+target_include_directories(polyv_ignite
+    PUBLIC ${CMAKE_SOURCE_DIR}
+)
+target_compile_options(polyv_ignite
+    PUBLIC -std=c++17
+)

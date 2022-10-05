@@ -1,4 +1,5 @@
 SECTIONS {
+    
     /**
     /* Section holding the encrypted payload
     /* defines two symbols for the begin and the end
@@ -8,14 +9,17 @@ SECTIONS {
     /*      __load_stop_encrypted
     */
     OVERLAY : {
-        .encrypted
+        .etext
         {
             /* ELF specification */
             . = ALIGN(4); 
-            *(.encrypted)
+            *(.etext)
 
-        } =0xDEADBEEF
+        }
     }
+
+    /* Section holding the decryption key */
+    .ekey : { *(.ekey) }
 
 } INSERT AFTER .text;
 

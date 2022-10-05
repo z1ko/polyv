@@ -8,7 +8,8 @@
         "shared_mutex": "cpp",
         "array": "cpp",
         "string": "cpp",
-        "string_view": "cpp"
+        "string_view": "cpp",
+        "functional": "cpp"
     },
     "cmake.sourceDirectory": "${workspaceFolder}/."
 }
