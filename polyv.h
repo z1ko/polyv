@@ -140,11 +140,20 @@ bool POLYV_ENCRYPTED polyv_load_elf64(elf64* elf, const char* filepath) {
     close(fd);
 
     // Check if the file is a valid ELF program
-    elf->header   = (Elf64_Ehdr*)(elf_base);
+    elf->header = (Elf64_Ehdr*)(elf_base);
     if (memcmp(elf->header->e_ident, elf_tag, 4) != 0) {
         polyv_unload_elf64(elf);
         return false;
     } 
+
+    // Check if the file is a valid executable
+    if (elf->header->e_type != ET_EXEC && 
+        elf->header->e_type != ET_REL  && 
+        elf->header->e_type != ET_DYN) 
+    {
+        polyv_unload_elf64(elf);
+        return false;
+    }
 
     elf->size = sb.st_size;
     elf->bytes = elf_base;
