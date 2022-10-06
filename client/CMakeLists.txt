@@ -11,6 +11,7 @@ target_link_options(polyv_client
 
 target_compile_options(polyv_client
     PUBLIC -std=c++17
+    PUBLIC -g
 )
 
 # Client should use encryption
